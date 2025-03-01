@@ -1,5 +1,127 @@
+$LightCyan: #e0f7fa;
+$Teal: #26a69a;
+$DarkerTeal: #00897b;
+
+$LightGray: #f0f0f0;
+$SlightlyDifferentGray: #e8e8e8; /* (для четных элементов) */
+$LighterGray: #d3d3d3;
+$Gray: #777;
+
+$Green: #4caf50;
+$DarkerGreen: #43a047;
+
+$LightTealBorder: 2px solid #b2dfdb;
+
+$LightGreenShadow: 0 0 4px rgba(76, 175, 80, 0.7);
+$ThickShadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+$TealShadow: 0 0 5px rgba(38, 166, 154, 0.5);
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: $LightCyan;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.todo-app-container {
+  background-color: white;
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: $ThickShadow;
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+h1 {
+  color: $Teal;
+  margin-bottom: 30px;
+}
+
+.input-area {
+  display: flex;
+  margin-bottom: 25px;
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 15px;
+  border: $LightTealBorder;
+  border-radius: 8px 0 0 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: $Teal;
+  box-shadow: $TealShadow;
+}
+
+button {
+  background-color: $Teal;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $DarkerTeal;
+  }
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    background-color: $LightGray;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Создает пространство между текстом и кнопкой */
+
+    &:nth-child(even) { /* для четных элементов */
+      background-color: $SlightlyDifferentGray;
+    }
+
+    &.completed {
+      text-decoration: line-through;
+      color: $Gray;
+      background-color: $LighterGray;
+    }
+
+    button { /* Кнопка "Complete" */
+      background-color: $Green;
+      color: white;
+      border-radius: 5px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $DarkerGreen;
+      }
+
+      &:focus {
+        outline: none; /* Убирает стандартный аутлайн */
+        box-shadow: $LightGreenShadow; /* Легкая тень при фокусе на кнопке */
+      }
+    }
+  }
 }
