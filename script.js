@@ -31,7 +31,8 @@ class ToDoList {
 
     constructor() {
 
-        this.todos = []; // Изначально список задач пуст. Добавить получение списка из localStorage позже
+        this.todos = JSON.parse(localStorage.getItem('todos')) || [];
+        // Получает список из localStorage, или создает пустой, если его нет
 
     }
 
@@ -40,6 +41,8 @@ class ToDoList {
         const newTodo = new ToDo(description); // Создает новый объект задачи
 
         this.todos.push(newTodo); // Добавляет в массив задач
+
+        this.setTodosToLocalStorage(); // Записывает обновленный список задач в localStorage
 
         this.renderTodoList(); // Обновляет интерфейс задач
 
@@ -56,6 +59,8 @@ class ToDoList {
         if (index >= 0 && index < this.todos.length) { // Корявенько, подумать
 
             this.todos[index].markComplete();
+
+            this.setTodosToLocalStorage(); // Записывает обновленный список задач в localStorage
 
             this.renderTodoList(); // Отрисовывает список после завершения задачи
 
@@ -94,6 +99,12 @@ class ToDoList {
             todoListElement.appendChild(listItem);
 
         });
+
+    }
+
+    setTodosToLocalStorage() {
+
+        localStorage.setItem('todos', JSON.stringify(this.todos));
 
     }
 
