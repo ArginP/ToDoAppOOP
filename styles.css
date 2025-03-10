@@ -16,6 +16,17 @@ body {
   min-height: 100vh;
 }
 
+.visually-hidden {
+  clip: rect(1px 1px 1px 1px); /* мамонты IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); /* старенькие браузеры */
+  clip-path: inset(50%); /* современные браузеры */
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .todo-app-container {
   background-color: white;
   padding: 35px;

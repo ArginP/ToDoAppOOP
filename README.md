@@ -14,3 +14,4 @@ Practice project
 - Добавление новых задач
 - Пометка задач выполненными
 - Хранение списка задач в localStorage
+- Невидимые лэйблы для окон ввода (screen readers accessibility)
