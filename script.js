@@ -7,20 +7,25 @@ const todoInput = document.getElementById("todoInput");
 
 class ToDo {
 
-    constructor(description) {
+    constructor(description, completed = false) {
 
         this.description = description; // Описание задачи
 
-        this.completed = false; // По-умолчанию не выполнено
+        this.completed = completed; // Получает значение выполнено из localStorage, по-умолчанию не выполнено
 
     }
 
+    // --- Переключение задачи выполнено/не выполнено ---
+
     markComplete() {
 
-        this.completed = true;
-
-        console.log(`"${this.description}" marked as complete!`);
-
+        if (!this.completed) {
+            this.completed = true;
+            console.log(`"${this.description}" marked as complete!`);
+        } else {
+            this.completed = false;
+            console.log(`"${this.description}" marked as yet incomplete!`);
+        }
     }
 
 // ! Добавить методы (редактирование задачи) позже.
@@ -31,8 +36,11 @@ class ToDoList {
 
     constructor() {
 
-        this.todos = JSON.parse(localStorage.getItem('todos')) || [];
-        // Получает список из localStorage, или создает пустой, если его нет
+        // Из localStorage получит простые объекты JSON задач, либо создаст пустой массив
+        const storedTodos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        // Преобразует простые объекты обратно в классы TоDо
+        this.todos = storedTodos.map(todo => new ToDo(todo.description, todo.completed));
 
     }
 
@@ -86,7 +94,7 @@ class ToDoList {
 
             }
 
-// --- Создает кнопку "Complete" для каждой задачи, отслеживает клик по ней ---
+            // --- Создает кнопку "Complete" для каждой задачи, отслеживает клик по ней ---
 
             const completeButton = document.createElement('button');
 
