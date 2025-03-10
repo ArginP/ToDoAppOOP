@@ -3,6 +3,7 @@
 const addButton = document.getElementById("addButton");
 const filterIncompleteButton = document.getElementById("filterIncompleteButton");
 const filterCompletedButton = document.getElementById("filterCompletedButton");
+const filterResetButton = document.getElementById("filterResetButton");
 const todoInput = document.getElementById("todoInput");
 
 // --- Классы, задающие структуру и логику работы списка задач ---
@@ -183,6 +184,10 @@ filterIncompleteButton.addEventListener("click", () => {
 filterCompletedButton.addEventListener("click", () => {
     const myFilteredList = new FilterToDoList(myTodoList);
     myFilteredList.filterCompleted();
+})
+
+filterResetButton.addEventListener("click", () => {
+    myTodoList.renderTodoList();
 })
 
 myTodoList.renderTodoList(); // Отрисовывает список задач при первичной загрузки страницы
