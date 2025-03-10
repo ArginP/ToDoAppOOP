@@ -92,6 +92,20 @@ button {
   }
 }
 
+.filters-area {
+  display: flex;
+  margin-bottom: 25px;
+  padding: 2px 5px;
+  justify-content: space-between;
+  align-items: center;
+  border: $LightTealBorder;
+  border-radius: 8px;
+
+  button {
+    border-radius: 8px;
+  }
+}
+
 .todo-list {
   list-style: none;
   padding: 0;

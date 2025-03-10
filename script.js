@@ -1,6 +1,7 @@
 // --- Кнопки HTML-страницы ---
 
 const addButton = document.getElementById("addButton");
+const filterButton = document.getElementById("filterOutCompleteButton");
 const todoInput = document.getElementById("todoInput");
 
 // --- Классы, задающие структуру и логику работы списка задач ---
@@ -10,7 +11,6 @@ class ToDo {
     constructor(description, completed = false) {
 
         this.description = description; // Описание задачи
-
         this.completed = completed; // Получает значение выполнено из localStorage, по-умолчанию не выполнено
 
     }
@@ -47,18 +47,15 @@ class ToDoList {
     addTodo(description) {
 
         const newTodo = new ToDo(description); // Создает новый объект задачи
-
         this.todos.push(newTodo); // Добавляет в массив задач
-
         this.setTodosToLocalStorage(); // Записывает обновленный список задач в localStorage
-
         this.renderTodoList(); // Обновляет интерфейс задач
 
     }
 
     listTodos() {
 
-        return this.todos; // Возвращает список задач (для дальнейшей обработки или отрисовки)
+        return [...this.todos]; // Возвращает копию списка задач в виде массива (для внешней обработки или отрисовки)
 
     }
 
@@ -67,43 +64,40 @@ class ToDoList {
         if (index >= 0 && index < this.todos.length) { // Корявенько, подумать
 
             this.todos[index].markComplete();
-
             this.setTodosToLocalStorage(); // Записывает обновленный список задач в localStorage
-
             this.renderTodoList(); // Отрисовывает список после завершения задачи
 
         }
 
     }
 
+    findTodoIndex(todo) {
+
+        return this.todos.findIndex(t => t === todo); // Находит и передает исходный индекс для внешней обработки
+
+    }
+
     renderTodoList() {
 
         const todoListElement = document.getElementById('todoList');
-
         todoListElement.innerHTML = ''; // Очищает список задач перед отрисовкой
 
         this.todos.forEach((todo, index) => {
 
             const listItem = document.createElement('li');
-
             listItem.textContent = todo.description;
 
             if (todo.completed) {
-
                 listItem.classList.add('completed'); // Добавляет CSS класс для стилей выполненной задачи
-
             }
 
             // --- Создает кнопку "Complete" для каждой задачи, отслеживает клик по ней ---
 
             const completeButton = document.createElement('button');
-
             completeButton.textContent = 'Complete';
-
             completeButton.onclick = () => this.markTodoComplete(index);
 
             listItem.appendChild(completeButton);
-
             todoListElement.appendChild(listItem);
 
         });
@@ -118,6 +112,45 @@ class ToDoList {
 
 }
 
+class FilterToDoList {
+
+    constructor(todoList) {
+
+        this.todoList = todoList;
+
+    }
+
+    filterOutCompleted() { // Отфильтровывает по отметке Выполнено (остаются все невыполненные)
+
+        this.renderFilteredList(this.todoList.listTodos().filter(todo => !todo.completed));
+
+    }
+
+    renderFilteredList(filters) { // Универсальный метод отрисовки, который принимает методы фильтрации как аргумент
+
+        const filteredTodos = filters;
+        const todoListElement = document.getElementById('todoList');
+        todoListElement.innerHTML = ''; // Очищает список задач перед отрисовкой
+
+        filteredTodos.forEach((todo) => {
+
+            const listItem = document.createElement('li');
+            listItem.textContent = todo.description;
+
+            const completeButton = document.createElement('button');
+            completeButton.textContent = 'Complete';
+            completeButton.onclick = () => {
+                const originalIndex = this.todoList.findTodoIndex(todo);
+                this.todoList.markTodoComplete(originalIndex); // Делегирует к ToDoList
+                this.renderFilteredList(); // Отрисовывает фильтрованный список задач
+            };
+
+            listItem.appendChild(completeButton);
+            todoListElement.appendChild(listItem);
+        });
+    }
+}
+
 const myTodoList = new ToDoList(); // Создает изначальный список задач
 
 // --- Отслеживание кликов по кнопке добавления новой задачи ---
@@ -126,11 +159,14 @@ addButton.addEventListener("click", () => {
     const todoText = todoInput.value.trim(); // Получаем текст описания новой задачи из окна ввода
 
     if (todoText) { // Сработает только если поле ввода не пустое
-
         myTodoList.addTodo(todoText); // Добавляет новую задачу
-
         todoInput.value = ""; // Очищает окно ввода
     }
 });
+
+filterButton.addEventListener("click", () => {
+    const myFilteredList = new FilterToDoList(myTodoList); // Создает фильтрованный список задач
+    myFilteredList.filterOutCompleted(); // Отрисовывает фильтрованный список задач
+})
 
 myTodoList.renderTodoList(); // Отрисовывает список задач при первичной загрузки страницы

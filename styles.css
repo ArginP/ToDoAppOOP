@@ -75,6 +75,19 @@ button:hover {
   background-color: #00897b;
 }
 
+.filters-area {
+  display: flex;
+  margin-bottom: 25px;
+  padding: 2px 5px;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #b2dfdb;
+  border-radius: 8px;
+}
+.filters-area button {
+  border-radius: 8px;
+}
+
 .todo-list {
   list-style: none;
   padding: 0;
