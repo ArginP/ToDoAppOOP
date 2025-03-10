@@ -86,6 +86,7 @@ button:hover {
 }
 .filters-area button {
   border-radius: 8px;
+  width: 138px;
 }
 
 .todo-list {

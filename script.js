@@ -1,7 +1,8 @@
 // --- Кнопки HTML-страницы ---
 
 const addButton = document.getElementById("addButton");
-const filterButton = document.getElementById("filterOutCompleteButton");
+const filterIncompleteButton = document.getElementById("filterIncompleteButton");
+const filterCompletedButton = document.getElementById("filterCompletedButton");
 const todoInput = document.getElementById("todoInput");
 
 // --- Классы, задающие структуру и логику работы списка задач ---
@@ -120,9 +121,15 @@ class FilterToDoList {
 
     }
 
-    filterOutCompleted() { // Отфильтровывает по отметке Выполнено (остаются все невыполненные)
+    filterIncomplete() { // Отфильтровывает по отметке Выполнено (остаются все невыполненные)
 
         this.renderFilteredList(this.todoList.listTodos().filter(todo => !todo.completed));
+
+    }
+
+    filterCompleted() { // Отфильтровывает по отметке Выполнено (остаются все выполненные)
+
+        this.renderFilteredList(this.todoList.listTodos().filter(todo => todo.completed));
 
     }
 
@@ -136,6 +143,10 @@ class FilterToDoList {
 
             const listItem = document.createElement('li');
             listItem.textContent = todo.description;
+
+            if (todo.completed) {
+                listItem.classList.add('completed'); // Добавляет CSS класс для стилей выполненной задачи
+            }
 
             const completeButton = document.createElement('button');
             completeButton.textContent = 'Complete';
@@ -164,9 +175,14 @@ addButton.addEventListener("click", () => {
     }
 });
 
-filterButton.addEventListener("click", () => {
+filterIncompleteButton.addEventListener("click", () => {
     const myFilteredList = new FilterToDoList(myTodoList); // Создает фильтрованный список задач
-    myFilteredList.filterOutCompleted(); // Отрисовывает фильтрованный список задач
+    myFilteredList.filterIncomplete(); // Отрисовывает фильтрованный список задач
+})
+
+filterCompletedButton.addEventListener("click", () => {
+    const myFilteredList = new FilterToDoList(myTodoList);
+    myFilteredList.filterCompleted();
 })
 
 myTodoList.renderTodoList(); // Отрисовывает список задач при первичной загрузки страницы
