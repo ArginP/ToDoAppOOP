@@ -70,6 +70,7 @@ button {
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 0 0 0 4px;
 }
 button:hover {
   background-color: #00897b;
@@ -84,7 +85,11 @@ button:hover {
   border: 2px solid #b2dfdb;
   border-radius: 8px;
 }
-.filters-area button {
+.filters-area .filters-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+.filters-area .filters-buttons button {
   border-radius: 8px;
   width: 138px;
   padding: 8px;
@@ -111,6 +116,12 @@ button:hover {
   color: #777;
   background-color: #d3d3d3;
 }
+.todo-list li.completed button { /* Кнопка "Complete" внутри выполненной задачи */
+  background-color: #9db7a0;
+}
+.todo-list li.completed button:hover {
+  background-color: #4caf50;
+}
 .todo-list li button { /* Кнопка "Complete" */
   background-color: #4caf50;
   color: white;
@@ -120,6 +131,7 @@ button:hover {
   cursor: pointer;
   border: none;
   transition: background-color 0.3s ease;
+  width: 100px;
 }
 .todo-list li button:hover {
   background-color: #43a047;
@@ -127,6 +139,17 @@ button:hover {
 .todo-list li button:focus {
   outline: none; /* Убирает стандартный аутлайн */
   box-shadow: 0 0 4px rgba(76, 175, 80, 0.7); /* Легкая тень при фокусе на кнопке */
+}
+.todo-list li button.delete { /* Кнопка "Delete" */
+  background-color: #964f4f;
+  width: 70px;
+}
+.todo-list li button.delete:hover {
+  background-color: #7c4242;
+}
+.todo-list li button.delete:focus {
+  outline: none; /* Убирает стандартный аутлайн */
+  box-shadow: 0 0 4px rgba(175, 76, 76, 0.7); /* Легкая тень при фокусе на кнопке */
 }
 
 /*# sourceMappingURL=styles.css.map */
