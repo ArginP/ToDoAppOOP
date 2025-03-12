@@ -1,11 +1,10 @@
 // --- Элементы HTML-страницы ---
 
 const addButton = document.getElementById("addButton");
+const filterResetButton = document.getElementById("filterResetButton");
 const filterIncompleteButton = document.getElementById("filterIncompleteButton");
 const filterCompletedButton = document.getElementById("filterCompletedButton");
-const filterResetButton = document.getElementById("filterResetButton");
 const todoInput = document.getElementById("todoInput");
-let filter = 'all';
 
 // --- Класс, задающий структуру задачи и логику работы с ней ---
 
@@ -189,19 +188,36 @@ class FilterToDoList {
 
     filterAll() { // Без фильтров
 
+        filter = 'all'; // Переменная для отслеживания текущего фильтра
+        this.removeActive();
+        filterResetButton.classList.add('active'); // Добавляет кнопке выбора фильтра стиль "Нажато"
         this.todoList.renderTodoList(); // Примет отрисовку по-умолчанию, то есть без фильров
 
     }
 
     filterIncomplete() { // Отфильтровывает по отметке Выполнено (остаются все невыполненные)
 
+        filter = 'incomplete';
+        this.removeActive();
+        filterIncompleteButton.classList.add('active');
         this.todoList.renderTodoList(this.todoList.listTodos().filter(todo => !todo.completed));
 
     }
 
     filterCompleted() { // Отфильтровывает по отметке Выполнено (остаются все выполненные)
 
+        filter = 'completed';
+        this.removeActive();
+        filterCompletedButton.classList.add('active');
         this.todoList.renderTodoList(this.todoList.listTodos().filter(todo => todo.completed));
+
+    }
+
+    removeActive() { // Снимает со всех кнопок фильтров подсветку
+
+        filterResetButton.classList.remove('active');
+        filterIncompleteButton.classList.remove('active');
+        filterCompletedButton.classList.remove('active');
 
     }
 }
@@ -211,7 +227,12 @@ class FilterToDoList {
 const myTodoList = new ToDoList();
 const myFilterToDoList = new FilterToDoList(myTodoList);
 
-// --- Отслеживание кликов по кнопке добавления новой задачи ---
+// --- Фильтры по-умолчанию, при изначальной загрузке страницы ---
+
+let filter = 'all';
+filterResetButton.classList.add('active');
+
+// --- Отслеживание кликов по кнопкам ---
 
 addButton.addEventListener("click", () => {
     const todoText = todoInput.value.trim(); // Получаем текст описания новой задачи из окна ввода
@@ -222,20 +243,16 @@ addButton.addEventListener("click", () => {
     }
 });
 
-filterIncompleteButton.addEventListener("click", () => {
-    filter = 'incomplete';
-    myFilterToDoList.filterIncomplete(); // Обновляет фильтрованный список задач
-})
-
-filterCompletedButton.addEventListener("click", () => {
-    filter = 'completed';
-    myFilterToDoList.filterCompleted();
-})
-
 filterResetButton.addEventListener("click", () => {
-    filter = 'all';
     myFilterToDoList.filterAll();
 })
 
-// myTodoList.renderTodoList(); // Отрисовывает список задач при первичной загрузки страницы
-myTodoList.whichRenderTodoList();
+filterIncompleteButton.addEventListener("click", () => {
+    myFilterToDoList.filterIncomplete();
+})
+
+filterCompletedButton.addEventListener("click", () => {
+    myFilterToDoList.filterCompleted();
+})
+
+myTodoList.whichRenderTodoList(); // Отрисовка списка задач при первичной загрузки страницы

@@ -76,6 +76,10 @@ button {
 button:hover {
   background-color: #00897b;
 }
+button.active {
+  background-color: #005b50;
+  box-shadow: 0 0 4px rgba(0, 91, 80, 0.7);
+}
 
 .filters-area {
   display: flex;

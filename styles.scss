@@ -1,6 +1,7 @@
 $LightCyan: #e0f7fa;
 $Teal: #26a69a;
 $DarkerTeal: #00897b;
+$EvenDarkerTeal: #005b50;
 
 $LightGray: #f0f0f0;
 $SlightlyDifferentGray: #e8e8e8; /* (для четных элементов) */
@@ -21,6 +22,7 @@ $LightGreenShadow: 0 0 4px rgba(76, 175, 80, 0.7);
 $LightRedShadow: 0 0 4px rgba(175, 76, 76, 0.7);
 $ThickShadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 $TealShadow: 0 0 5px rgba(38, 166, 154, 0.5);
+$DarkTealShadow: 0 0 4px rgba(0, 91, 80, 0.7);
 
 * {
   margin: 0;
@@ -97,6 +99,11 @@ button {
 
   &:hover {
     background-color: $DarkerTeal;
+  }
+
+  &.active {
+    background-color: $EvenDarkerTeal;
+    box-shadow: $DarkTealShadow;
   }
 }
 
