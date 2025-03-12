@@ -153,6 +153,9 @@ class ToDoList {
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Delete';
             deleteButton.classList.add('delete');
+
+            deleteButton.disabled = !todo.completed; // Отключает кнопку "Delete" для невыполненных задач
+
             deleteButton.onclick = () => this.deleteTodo(todo);
             buttonsDiv.appendChild(deleteButton);
 

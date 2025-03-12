@@ -13,6 +13,7 @@ $GrayishGreen: #9db7a0;
 
 $DeepRed: #964f4f;
 $DeeperRed: #7c4242;
+$BleakRed: #c4b2b2;
 
 $LightTealBorder: 2px solid #b2dfdb;
 
@@ -37,7 +38,7 @@ body {
   min-height: 100vh;
 }
 
-.visually-hidden {
+.visually-hidden { /* прячет лэйблы для полей ввода, оставляя их доступными для screen reader */
   clip: rect(1px 1px 1px 1px); /* мамонты IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px); /* старенькие браузеры */
   clip-path: inset(50%); /* современные браузеры */
@@ -46,6 +47,7 @@ body {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+  user-focus: none; /* чтобы через Tab нельзя было случайно выделить невидимый элемент */
 }
 
 .todo-app-container {
@@ -130,7 +132,7 @@ button {
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Создает пространство между текстом и кнопкой */
+    justify-content: space-between; /* создает пространство между текстом и кнопками */
 
     &:nth-child(even) { /* для четных элементов */
       background-color: $SlightlyDifferentGray;
@@ -141,7 +143,7 @@ button {
       color: $Gray;
       background-color: $LighterGray;
 
-      button { /* Кнопка "Complete" внутри выполненной задачи */
+      button { /* кнопка "Complete" внутри выполненной задачи */
         background-color: $GrayishGreen;
 
         &:hover {
@@ -150,7 +152,7 @@ button {
       }
     }
 
-    button { /* Кнопка "Complete" */
+    button { /* кнопка "Complete" */
       background-color: $Green;
       color: white;
       border-radius: 5px;
@@ -166,11 +168,11 @@ button {
       }
 
       &:focus {
-        outline: none; /* Убирает стандартный аутлайн */
-        box-shadow: $LightGreenShadow; /* Легкая тень при фокусе на кнопке */
+        outline: none; /* убирает стандартный аутлайн */
+        box-shadow: $LightGreenShadow; /* легкая тень при фокусе на кнопке */
       }
 
-      &.delete { /* Кнопка "Delete" */
+      &.delete { /* кнопка "Delete" */
         background-color: $DeepRed;
         width: 70px;
 
@@ -179,8 +181,14 @@ button {
         }
 
         &:focus {
-          outline: none; /* Убирает стандартный аутлайн */
-          box-shadow: $LightRedShadow; /* Легкая тень при фокусе на кнопке */
+          outline: none; /* убирает стандартный аутлайн */
+          box-shadow: $LightRedShadow; /* легкая тень при фокусе на кнопке */
+        }
+
+        &:disabled {
+          background-color: $BleakRed;
+          cursor: not-allowed;
+          user-focus: none;
         }
       }
     }

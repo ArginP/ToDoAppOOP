@@ -16,7 +16,7 @@ body {
   min-height: 100vh;
 }
 
-.visually-hidden {
+.visually-hidden { /* прячет лэйблы для полей ввода, оставляя их доступными для screen reader */
   clip: rect(1px 1px 1px 1px); /* мамонты IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px); /* старенькие браузеры */
   clip-path: inset(50%); /* современные браузеры */
@@ -25,6 +25,7 @@ body {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+  user-focus: none; /* чтобы через Tab нельзя было случайно выделить невидимый элемент */
 }
 
 .todo-app-container {
@@ -106,7 +107,7 @@ button:hover {
   border-radius: 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Создает пространство между текстом и кнопкой */
+  justify-content: space-between; /* создает пространство между текстом и кнопками */
 }
 .todo-list li:nth-child(even) { /* для четных элементов */
   background-color: #e8e8e8;
@@ -116,13 +117,13 @@ button:hover {
   color: #777;
   background-color: #d3d3d3;
 }
-.todo-list li.completed button { /* Кнопка "Complete" внутри выполненной задачи */
+.todo-list li.completed button { /* кнопка "Complete" внутри выполненной задачи */
   background-color: #9db7a0;
 }
 .todo-list li.completed button:hover {
   background-color: #4caf50;
 }
-.todo-list li button { /* Кнопка "Complete" */
+.todo-list li button { /* кнопка "Complete" */
   background-color: #4caf50;
   color: white;
   border-radius: 5px;
@@ -137,10 +138,10 @@ button:hover {
   background-color: #43a047;
 }
 .todo-list li button:focus {
-  outline: none; /* Убирает стандартный аутлайн */
-  box-shadow: 0 0 4px rgba(76, 175, 80, 0.7); /* Легкая тень при фокусе на кнопке */
+  outline: none; /* убирает стандартный аутлайн */
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.7); /* легкая тень при фокусе на кнопке */
 }
-.todo-list li button.delete { /* Кнопка "Delete" */
+.todo-list li button.delete { /* кнопка "Delete" */
   background-color: #964f4f;
   width: 70px;
 }
@@ -148,8 +149,13 @@ button:hover {
   background-color: #7c4242;
 }
 .todo-list li button.delete:focus {
-  outline: none; /* Убирает стандартный аутлайн */
-  box-shadow: 0 0 4px rgba(175, 76, 76, 0.7); /* Легкая тень при фокусе на кнопке */
+  outline: none; /* убирает стандартный аутлайн */
+  box-shadow: 0 0 4px rgba(175, 76, 76, 0.7); /* легкая тень при фокусе на кнопке */
+}
+.todo-list li button.delete:disabled {
+  background-color: #c4b2b2;
+  cursor: not-allowed;
+  user-focus: none;
 }
 
 /*# sourceMappingURL=styles.css.map */
