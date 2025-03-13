@@ -1,10 +1,10 @@
 // --- Элементы HTML-страницы ---
 
-const addButton = document.getElementById("addButton");
+const inputForm = document.getElementById("inputForm");
+const todoInput = document.getElementById("todoInput");
 const filterResetButton = document.getElementById("filterResetButton");
 const filterIncompleteButton = document.getElementById("filterIncompleteButton");
 const filterCompletedButton = document.getElementById("filterCompletedButton");
-const todoInput = document.getElementById("todoInput");
 
 // --- Класс, задающий структуру задачи и логику работы с ней ---
 
@@ -232,16 +232,21 @@ const myFilterToDoList = new FilterToDoList(myTodoList);
 let filter = 'all';
 filterResetButton.classList.add('active');
 
-// --- Отслеживание кликов по кнопкам ---
+// --- Отслеживание событий ---
 
-addButton.addEventListener("click", () => {
+inputForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
     const todoText = todoInput.value.trim(); // Получаем текст описания новой задачи из окна ввода
 
-    if (todoText) { // Сработает только если поле ввода не пустое
-        myTodoList.addTodo(todoText); // Добавляет новую задачу
+    if (todoText) {
+        myTodoList.addTodo(todoText); // Добавляет задачу в список
         todoInput.value = ""; // Очищает окно ввода
+        console.log(`Added "${todoText}" to the list of todos`);
+    } else {
+        console.log(`Failed to add todo — input field is empty.`);
     }
-});
+})
 
 filterResetButton.addEventListener("click", () => {
     myFilterToDoList.filterAll();
